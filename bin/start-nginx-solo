@@ -5,7 +5,8 @@ rm -f $psmgr
 mkfifo $psmgr
 
 # Evaluate config to get $PORT
-erb config/nginx.conf.erb > config/nginx.conf
+# erb config/nginx.conf.erb > config/nginx.conf
+erb nginx.conf.erb > nginx.conf
 
 n=1
 while getopts :f option ${@:1:2}
@@ -33,7 +34,8 @@ echo 'buildpack=nginx at=logs-initialized'
   #We expect nginx to run in foreground.
   #We also expect a socket to be at /tmp/nginx.socket.
   echo 'buildpack=nginx at=nginx-start'
-  bin/nginx -p . -c config/nginx.conf
+  # bin/nginx -p . -c config/nginx.conf
+  bin/nginx -p . -c nginx.conf
   echo 'nginx' >$psmgr
 ) &
 
